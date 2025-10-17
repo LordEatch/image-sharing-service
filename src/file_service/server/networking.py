@@ -2,8 +2,8 @@ from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 from typing import Any
 from ..utilities import socket_utilities
 
-HOST = "127.0.0.1"
-PORT = 65531
+HOST = "localhost"
+PORT = 1234
 
 
 def run_server() -> None:

@@ -5,19 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3ea0a2e-ce58-4d8c-b75c-11e4d0e05d6e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/MypyPlugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/nose2-assessed-exercise-1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mypy.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/message_protocol.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/socket_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/file_service/client/input_parsing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/file_service/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/file_service/utilities/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/file_service/utilities/test_message_protocol.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_service/client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_service/client/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_service/client/networking.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_service/client/networking.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_service/server/networking.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_service/server/networking.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_service/utilities/message_protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_service/utilities/message_protocol.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,21 +46,122 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.client.executor": "Run",
-    "Python.message_protocol.executor": "Debug",
+    "Python.message_protocol.executor": "Run",
+    "Python.nose2-assessed-exercise-1.executor": "Run",
+    "Python.run-client.executor": "Run",
+    "Python.run-server.executor": "Run",
+    "Python.run-unit-tests.executor": "Run",
     "Python.server.executor": "Run",
+    "Python.socket_utils.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/cgodwin/Documents/coding/university/nose2-assessed-exercise-1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "works.szabope.mypy.configurable",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/file_service/utilities" />
+      <recent name="$PROJECT_DIR$/test/file_service" />
+      <recent name="$PROJECT_DIR$/test" />
+      <recent name="$PROJECT_DIR$/src/socket_utils" />
+      <recent name="$PROJECT_DIR$/src/server" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/file_service" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/socket_utils" />
+      <recent name="$PROJECT_DIR$/src/server" />
+      <recent name="$PROJECT_DIR$/src/client" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.run-unit-tests">
+    <configuration name="run-client" type="PythonConfigurationType" factoryName="Python">
+      <module name="nose2-assessed-exercise-1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (nose2-assessed-exercise-1)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="file_service.client.client" />
+      <option name="PARAMETERS" value="localhost 1234 put test1.txt" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run-server" type="PythonConfigurationType" factoryName="Python">
+      <module name="nose2-assessed-exercise-1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (nose2-assessed-exercise-1)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="file_service.server.server" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run-unit-tests" type="PythonConfigurationType" factoryName="Python">
+      <module name="nose2-assessed-exercise-1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (nose2-assessed-exercise-1)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="unittest" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.run-server" />
+      <item itemvalue="Python.run-client" />
+      <item itemvalue="Python.run-unit-tests" />
+    </list>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -81,6 +179,12 @@
       <updated>1760456976281</updated>
       <workItem from="1760456977527" duration="1012000" />
       <workItem from="1760614326881" duration="8140000" />
+      <workItem from="1760630802562" duration="704000" />
+      <workItem from="1760631575958" duration="2824000" />
+      <workItem from="1760635043001" duration="9618000" />
+      <workItem from="1760645929497" duration="6791000" />
+      <workItem from="1760713446899" duration="6023000" />
+      <workItem from="1760726375040" duration="8684000" />
     </task>
     <servers />
   </component>
@@ -88,8 +192,13 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$message_protocol.coverage" NAME="message_protocol Coverage Results" MODIFIED="1760622573942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$client.coverage" NAME="client Coverage Results" MODIFIED="1760619046636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$server.coverage" NAME="server Coverage Results" MODIFIED="1760619041465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$run_unit_tests.coverage" NAME="run-unit-tests Coverage Results" MODIFIED="1760734651793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$message_protocol.coverage" NAME="message_protocol Coverage Results" MODIFIED="1760733935414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/file_service/utilities" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$run_client.coverage" NAME="run-client Coverage Results" MODIFIED="1760733119674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$client.coverage" NAME="client Coverage Results" MODIFIED="1760730087301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/file_service/client" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$socket_utils.coverage" NAME="socket_utils Coverage Results" MODIFIED="1760708747255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$run_server.coverage" NAME="run-server Coverage Results" MODIFIED="1760733114840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$nose2_assessed_exercise_1.coverage" NAME="nose2-assessed-exercise-1 Coverage Results" MODIFIED="1760716395120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nose2_assessed_exercise_1$server.coverage" NAME="server Coverage Results" MODIFIED="1760716982422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/file_service/server" />
   </component>
 </project>

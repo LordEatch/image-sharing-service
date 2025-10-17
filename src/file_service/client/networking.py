@@ -1,12 +1,9 @@
 from socket import socket, AF_INET, SOCK_STREAM
 from ..utilities import socket_utilities
 
-SERVER_HOST = "127.0.0.1"
-SERVER_PORT = 65531
 
-
-def run_client() -> None:
-    my_socket = open_client_socket(SERVER_HOST, SERVER_PORT)
+def run_client(server_host: str, server_port: int) -> None:
+    my_socket = open_client_socket(server_host, server_port)
     with my_socket:
         payload = input("Enter message > ")
         socket_utilities.send_payload(my_socket, payload)
