@@ -1,3 +1,22 @@
-.venv
-mypy.ini
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDEs
+.idea/
+.vscode/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Mypy cache
+.mypy_cache/
+
+# Personal files
 todo.txt
+
+# Config files
+mypy.ini
