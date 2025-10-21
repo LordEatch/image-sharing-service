@@ -1,10 +1,11 @@
 import unittest
 from src.file_service.utilities.message_protocol import get_max_number_of_payload_bytes
 
-# NOTE
-# I am only testing functions with their expected datatype. The main goal of unit testing is for correct behaviour. The only exception will be functions involving user input (if I remember).
 
-class TestGetMaxNumberOfPayloadBytes(unittest.TestCase):
+# NOTE
+# Functions will only be tested with arguments of the expected datatype. The main goal of unit testing is for correct behaviour.
+
+class TestMessageProtocol(unittest.TestCase):
     def test_get_max_number_of_payload_bytes(self) -> None:
         self.assertEqual(get_max_number_of_payload_bytes(1), 255)
         self.assertEqual(get_max_number_of_payload_bytes(2), 65535)

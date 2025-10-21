@@ -1,8 +1,9 @@
-from . import networking
+from .networking import run_server
+from .server_input import get_port
 
 
 def main() -> None:
-    networking.run_server()
+    run_server(get_port())
 
 
 if __name__ == "__main__":

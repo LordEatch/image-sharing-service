@@ -1,0 +1,2 @@
+write tests for client_input and server_input
+check to see if gitignore works

@@ -3,27 +3,39 @@ from typing import Any
 from ..utilities import socket_utilities
 
 HOST = "localhost"
-PORT = 1234
 
 
-def run_server() -> None:
-    with open_listening_socket(HOST, PORT) as listening_socket:
+def run_server(port: int) -> None:
+    """
+    Start the server and handle incoming client connections.
+    """
+    with open_listening_socket(HOST, port) as listening_socket:
         handle_clients(listening_socket)
 
+
 def open_listening_socket(host: str, port: int) -> socket:
+    """
+    Open and configure a TCP listening socket for the server.
+    """
     listening_socket = socket(AF_INET, SOCK_STREAM)
-    # Set SO_REUSEADDR to allow immediate reuse of the address/port. This prevents "Address already in use" errors when the socket is in TIME_WAIT state from a previous connection (even if the port is no longer in use).
+
+    # Set SO_REUSEADDR to allow immediate reuse of the address/port. This prevents "Address already in use" errors when
+    # the socket is in the TIME_WAIT state from a previous connection (even if the port is no longer actively used).
     listening_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     listening_socket.bind((host, port))
     listening_socket.listen()
+
     print(f"Server listening on {host}:{port}.")
     return listening_socket
 
+
 def handle_clients(listening_socket: socket) -> None:
     """
-    Take an open listening socket as a parameter. Loop over each client connection and handle them.
+    Continuously accept and handle incoming client connections.
     """
-    # WARNING Will this break if 2 clients connect at the same time?
+    # WARNING:
+    # This may block if multiple clients attempt to connect simultaneously.
+
     while True:
         try:
             client_socket, client_address = listening_socket.accept()
@@ -31,13 +43,14 @@ def handle_clients(listening_socket: socket) -> None:
         except ConnectionError:
             print("Connection closed.")
 
+
 def handle_client(client_socket: socket, client_address: tuple[str, int]) -> None:
     """
-    Take an open client socket as a parameter. Loop over each message and handle them.
+    Handle communication with a single connected client.
     """
     print(f"{client_address} has connected.")
     with client_socket:
-        # Cycle over each message until the client disconnects.
+        # Process each message until the client disconnects.
         while True:
             try:
                 handle_message(client_socket)
@@ -45,9 +58,10 @@ def handle_client(client_socket: socket, client_address: tuple[str, int]) -> Non
                 print(f"{client_address} has disconnected.")
                 break
 
+
 def handle_message(client_socket: socket) -> Any:
     """
-    Take an open client socket as a parameter. Receive the socket's next message in full.
+    Receive and process the next message from the client socket.
     """
     incoming_payload = socket_utilities.receive_payload(client_socket)
     print(f"Received: {incoming_payload}")

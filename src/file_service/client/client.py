@@ -1,11 +1,10 @@
 import sys
-from . import networking
+from .networking import run_client
+from .client_input import get_server_host, get_server_port
 
 
 def main() -> None:
-    server_host = sys.argv[1]
-    server_port = int(sys.argv[2])
-    networking.run_client(server_host, server_port)
+    run_client(get_server_host(), get_server_port())
 
 
 if __name__ == "__main__":
