@@ -1,5 +1,5 @@
 from .networking import run_server
-from .server_input import get_port
+from .server_io import get_port
 
 
 def main() -> None:

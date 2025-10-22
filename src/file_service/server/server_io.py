@@ -1,11 +1,8 @@
 import sys
+from ..utilities.debug import print_debug
 
-DEBUG = False
 
-# NOTE:
-# I could validate the format or type of command-line arguments here, but I will not, because the brief did not specify
-# that this was necessary.
-
+# Erroneous user inputs are not caught because the brief did not specify that such validation was required.
 
 def get_port() -> int:
     """
@@ -13,6 +10,5 @@ def get_port() -> int:
     """
     # Convert the string input from the command line to an integer.
     port = int(sys.argv[1])
-    if DEBUG:
-        print("DEBUG: Port is:", port)
+    print_debug(f"User inputted port: {port}.")
     return port

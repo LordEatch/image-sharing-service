@@ -1,6 +1,5 @@
-import sys
 from .networking import run_client
-from .client_input import get_server_host, get_server_port
+from .client_io import get_server_host, get_server_port
 
 
 def main() -> None:

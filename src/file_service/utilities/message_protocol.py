@@ -1,68 +1,91 @@
-from typing import Literal, Any, Callable
-import pickle  # pickle is used to (de)serialise Python objects for binary transmission.
+from typing import Any, Callable, Literal
+import pickle
 
-_NUMBER_OF_PAYLOAD_LENGTH_BYTES = 2
+# Message protocol constants.
+_PAYLOAD_SIZE_BYTES_COUNT = 2  # Number of prefixing bytes that describe the size of the payload.
 _ENDIANNESS: Literal["big", "little"] = "big"
 
+# Payload dictionary constants.
+# Keys.
+COMMAND_KEY = "command"
+STATUS_KEY = "status"
+FILENAME_KEY = "filename"
+FILE_DATA_KEY = "file_data"
+# Command values.
+PUT_VAL = "put"
+GET_VAL = "get"
+LIST_VAL = "list"
+# Status values.
+REQUEST_VAL = "request"
+OK_VAL = "ok"
+ERROR_VAL = "error"
 
-def unframe_message(receive_all_binary_from_socket_fn: Callable[[int], bytes]) -> Any:
-    """
-    Return a Python object from a framed message defined by the protocol from a socket.
-    """
-    # Receive the payload length in binary form.
-    payload_length_binary = receive_all_binary_from_socket_fn(_NUMBER_OF_PAYLOAD_LENGTH_BYTES)
 
-    # Convert the payload length from binary to an integer.
-    number_of_payload_bytes = int.from_bytes(payload_length_binary, _ENDIANNESS)
+def frame_message(payload: dict[str, Any]) -> bytes:
+    """Wrap a pickled payload with its length prefix. Validate the payload before framing."""
+    data = pickle.dumps(payload)
+    size = len(data)
+    _validate_payload(payload)
+    header = size.to_bytes(_PAYLOAD_SIZE_BYTES_COUNT, _ENDIANNESS)
+    return header + data
 
-    # Receive the payload itself.
-    payload_binary = receive_all_binary_from_socket_fn(number_of_payload_bytes)
 
-    # Deserialise the payload back into a Python object.
-    payload = pickle.loads(payload_binary)
+def unframe_message(recv_fn: Callable[[int], bytes]) -> dict[str, Any]:
+    """Receive a framed message from a socket and return the unpickled payload. Validate the payload after unframing."""
+    def receive_payload_size() -> int:
+        return int.from_bytes(recv_fn(_PAYLOAD_SIZE_BYTES_COUNT), _ENDIANNESS)
+
+    def receive_payload(size: int) -> dict[str, Any]:
+        return pickle.loads(recv_fn(size))  # type: ignore
+
+    payload: dict[str, Any] = receive_payload(receive_payload_size())
+    _validate_payload(payload)
     return payload
 
 
-def frame_message(payload: Any) -> bytes:
-    """
-    Return a binary message containing a payload ready for transmission.
-    Raise an exception if the payload is too large.
-    """
-    # Serialise the payload into binary form.
-    payload_binary = pickle.dumps(payload)
-    number_of_payload_bytes = len(payload_binary)
+def _validate_payload(payload: dict[str, Any]) -> None:
+    def _validate_keys() -> None:
+        """Raise an exception if any of the required keys are missing."""
+        required_keys = {"command", "status", "filename", "file_data"}
+        missing_keys = required_keys - payload.keys()
+        if missing_keys:
+            raise KeyError(f"Missing required keys: {missing_keys}")
 
-    # Check if the payload exceeds the maximum allowed size.
-    max_number_of_payload_bytes = get_max_number_of_payload_bytes(_NUMBER_OF_PAYLOAD_LENGTH_BYTES)
-    if number_of_payload_bytes > max_number_of_payload_bytes:
-        raise ValueError(f"Payload too large. Max size is {max_number_of_payload_bytes} bytes.")
+    def _validate_value_types() -> None:
+        """Validate that payload values have the correct types."""
+        if not isinstance(payload[COMMAND_KEY], str):
+            raise TypeError("Command must be a string.")
+        if not isinstance(payload[STATUS_KEY], str):
+            raise TypeError("Status must be a string.")
+        if not isinstance(payload[FILENAME_KEY], (str, type(None))):
+            raise TypeError("Filename must be str or None.")
+        if not isinstance(payload[FILE_DATA_KEY], (bytes, type(None))):
+            raise TypeError("File data must be bytes or None.")
 
-    # Convert the payload length to binary and prepend it to the payload.
-    payload_length_binary = number_of_payload_bytes.to_bytes(_NUMBER_OF_PAYLOAD_LENGTH_BYTES, _ENDIANNESS)
-    message_binary = payload_length_binary + payload_binary
-    return message_binary
+    def _validate_size() -> None:
+        """Make sure a payload (any python object) is not too big."""
+        def get_size() -> int:
+            data = pickle.dumps(payload)
+            size = len(data)
+            return size
 
+        max_size = _get_max_payload_size(_PAYLOAD_SIZE_BYTES_COUNT)
+        if get_size() > max_size:
+            raise ValueError(f"Payload too large (max {max_size} bytes).")
 
-def get_max_number_of_payload_bytes(number_of_payload_length_bytes: int) -> int:
-    """
-    Return the maximum number of payload bytes that can be sent given the number of payload length bytes.
-    """
-    def check_number_of_payload_length_bytes() -> None:
-        """
-        Check that number_of_payload_length_bytes is within the valid range.
-        Raise an exception if it is not.
-        """
-        _MIN_NUMBER_OF_PAYLOAD_LENGTH_BYTES = 1
-        _MAX_NUMBER_OF_PAYLOAD_LENGTH_BYTES = 8
+    _validate_keys()
+    _validate_value_types()
+    _validate_size()
 
-        is_valid = _MIN_NUMBER_OF_PAYLOAD_LENGTH_BYTES <= number_of_payload_length_bytes <= _MAX_NUMBER_OF_PAYLOAD_LENGTH_BYTES
-        if not is_valid:
-            raise ValueError("number_of_payload_length_bytes must be within the appropriate range.")
+def _get_max_payload_size(size_bytes_count: int) -> int:
+    """Get the maximum possible payload size given size_bytes_count."""
+    def validate_payload_size_bytes_count() -> None:
+        """Make sure size_bytes_count is within the allowed range."""
+        _MIN_PAYLOAD_SIZE_BYTES_COUNT = 1
+        _MAX_PAYLOAD_SIZE_BYTES_COUNT = 8
+        if not _MIN_PAYLOAD_SIZE_BYTES_COUNT <= size_bytes_count <= _MAX_PAYLOAD_SIZE_BYTES_COUNT:
+            raise ValueError(f"Number of payload size bytes must be between {_MIN_PAYLOAD_SIZE_BYTES_COUNT} and {_MAX_PAYLOAD_SIZE_BYTES_COUNT}.")
 
-    # Validate the number of payload length bytes before calculation.
-    check_number_of_payload_length_bytes()
-
-    # Calculate the maximum number of payload bytes.
-    number_of_payload_length_bits = 8 * number_of_payload_length_bytes
-    max_number_of_payload_bytes = 2 ** number_of_payload_length_bits - 1
-    return max_number_of_payload_bytes  # type: ignore
+    validate_payload_size_bytes_count()
+    max_size: int = 2 ** (8 * size_bytes_count) - 1
+    return max_size
