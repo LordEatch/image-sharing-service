@@ -1,22 +1,23 @@
-# Virtual environment
+# Virtual environment:
 .venv/
 env/
 venv/
 
-# IDEs
+# IDEs:
 .idea/
 .vscode/
 
-# Python bytecode
+# Python bytecode:
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Mypy cache
+# Mypy cache:
 .mypy_cache/
 
-# Personal files
+# Personal files:
 todo.txt
+project-plan.txt
 
-# Config files
+# Config files:
 mypy.ini
