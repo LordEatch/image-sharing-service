@@ -1,31 +1,6 @@
-from socket import socket
 import sys
 
 from file_service.utilities.debug import print_debug
-
-
-def print_response_report(
-    sock: socket,
-    command: str,
-    success: bool,
-    filename: str | None = None,
-    error_message: str | None = None,
-) -> None:
-    """Print a formatted response report from the server."""
-    _SUCCESS_VAL = "SUCCESS"
-    _FAILURE_VAL = "FAILURE"
-
-    status = _SUCCESS_VAL if success else _FAILURE_VAL
-    host = sock.getpeername()
-    parts = [str(host), command]
-    if filename:
-        parts.append(filename)
-    parts.append(status)
-
-    report = "\t".join(parts)
-    if not success and error_message:
-        report += f": {error_message}."
-    print(report)
 
 
 # Erroneous user inputs are not caught because the brief did not specify that such validation was required.

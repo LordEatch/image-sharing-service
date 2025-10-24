@@ -14,7 +14,7 @@ from file_service.protocol.message import (
     ERROR_VAL,
     CommandError,
 )
-from file_service.utilities.debug import print_debug, print_error
+from file_service.utilities.debug import print_debug, print_error, print_command_report
 
 
 def handle_request(sock: socket) -> None:
@@ -46,9 +46,11 @@ def handle_put_request(sock: socket, request: dict[str, Any]) -> None:
         }
         error_message = error_messages[type(e)]
         print_error(error_message)
+        print_command_report(sock, PUT_VAL, False, filename, error_message)
         _send_error_response(sock, request, error_message)
         return
 
+    print_command_report(sock, PUT_VAL, True, filename)
     _send_ok_response(sock, request)
 
 
@@ -60,9 +62,11 @@ def handle_get_request(sock: socket, request: dict[str, Any]) -> None:
     except FileNotFoundError:
         error_message = f"Cannot find '{filename}' on the server"
         print_error(error_message)
+        print_command_report(sock, GET_VAL, False, filename, error_message)
         _send_error_response(sock, request, error_message)
         return
 
+    print_command_report(sock, GET_VAL, True, filename)
     _send_ok_response(sock, request, file_data=file_data)
 
 

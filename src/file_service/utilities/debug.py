@@ -1,3 +1,5 @@
+from socket import socket
+
 DEBUG = False
 ERROR = True
 
@@ -10,6 +12,30 @@ _BLUE = "\033[34m"
 _MAGENTA = "\033[35m"
 _CYAN = "\033[36m"
 _WHITE = "\033[37m"
+
+
+def print_command_report(
+    sock: socket,
+    command: str,
+    success: bool,
+    filename: str | None = None,
+    error_message: str | None = None,
+) -> None:
+    """Print a formatted report of the outcome of a client command."""
+    _SUCCESS_VAL = "SUCCESS"
+    _FAILURE_VAL = "FAILURE"
+
+    status = _SUCCESS_VAL if success else _FAILURE_VAL
+    host = sock.getpeername()
+    parts = [str(host), command]
+    if filename:
+        parts.append(filename)
+    parts.append(status)
+
+    report = "\t".join(parts)
+    if not success and error_message:
+        report += f": {error_message}."
+    print(report)
 
 
 def print_debug(message: str) -> None:

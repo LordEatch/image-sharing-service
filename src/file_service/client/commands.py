@@ -2,7 +2,6 @@ import os
 from socket import socket
 from typing import Callable, Any
 
-from file_service.client import client_io
 from file_service.utilities import storage, message as message_utilities
 from file_service.protocol import message as message_protocol
 from file_service.protocol.message import (
@@ -14,7 +13,7 @@ from file_service.protocol.message import (
     ERROR_VAL,
     DETAILS_KEY,
 )
-from file_service.utilities.debug import print_debug, print_error
+from file_service.utilities.debug import print_debug, print_error, print_command_report
 
 
 def handle_command(sock: socket, command: str, get_file_str_fn: Callable[[], str]) -> None:
@@ -49,7 +48,7 @@ def handle_put_command(sock: socket, get_file_str_fn: Callable[[], str]) -> None
         }
         error_message = error_messages[type(e)]
         print_error(error_message)
-        client_io.print_response_report(sock, PUT_VAL, False, filename, error_message)
+        print_command_report(sock, PUT_VAL, False, filename, error_message)
         return
 
     print_debug(f"Sending {PUT_VAL} request for '{filename}'...")
@@ -57,7 +56,7 @@ def handle_put_command(sock: socket, get_file_str_fn: Callable[[], str]) -> None
     print_debug(f"{PUT_VAL} request for '{filename}' sent successfully.")
 
     success = response[STATUS_KEY] != ERROR_VAL
-    client_io.print_response_report(sock, PUT_VAL, success, filename, response.get(DETAILS_KEY))
+    print_command_report(sock, PUT_VAL, success, filename, response.get(DETAILS_KEY))
 
 
 def handle_get_command(sock: socket, get_file_str_fn: Callable[[], str]) -> None:
@@ -69,7 +68,7 @@ def handle_get_command(sock: socket, get_file_str_fn: Callable[[], str]) -> None
     print_debug(f"{GET_VAL} request for '{filename}' sent successfully.")
 
     if response[STATUS_KEY] == ERROR_VAL:
-        client_io.print_response_report(sock, GET_VAL, False, filename, response[DETAILS_KEY])
+        print_command_report(sock, GET_VAL, False, filename, response[DETAILS_KEY])
         return
 
     try:
@@ -77,10 +76,10 @@ def handle_get_command(sock: socket, get_file_str_fn: Callable[[], str]) -> None
     except FileExistsError:
         msg = f"Cannot download '{filename}' because it already exists on the client."
         print_error(msg)
-        client_io.print_response_report(sock, GET_VAL, False, filename, msg)
+        print_command_report(sock, GET_VAL, False, filename, msg)
         return
 
-    client_io.print_response_report(sock, GET_VAL, True, filename)
+    print_command_report(sock, GET_VAL, True, filename)
 
 
 def _send_request(sock: socket, **kwargs) -> dict[str, Any]:  # type: ignore
