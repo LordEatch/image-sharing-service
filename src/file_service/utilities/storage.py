@@ -17,6 +17,10 @@ def get_local_file(filename: str) -> bytes:
     return file
 
 
+def get_local_list() -> list[str]:
+    return os.listdir(os.getcwd())
+
+
 def get_image(filepath: str) -> bytes:
     """
     Retrieve an image file (.jpg, .jpeg, .png) from the current working directory.

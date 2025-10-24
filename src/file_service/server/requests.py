@@ -28,8 +28,7 @@ def handle_request(sock: socket) -> None:
     elif command == GET_VAL:
         handle_get_request(sock, request)
     elif command == LIST_VAL:
-        # handle_list_request(sock)
-        pass
+        handle_list_request(sock, request)
     else:
         raise CommandError(f"Unknown command received from client: {command}.")
 
@@ -68,6 +67,20 @@ def handle_get_request(sock: socket, request: dict[str, Any]) -> None:
 
     print_command_report(sock, GET_VAL, True, filename)
     _send_ok_response(sock, request, file_data=file_data)
+
+
+def handle_list_request(sock: socket, request: dict[str, Any]) -> None:
+    """Handle a LIST request from the client."""
+    filenames = storage.get_local_list()
+
+    if not filenames:
+        error_message = "There are no local files or directories stored on the server"
+        print_command_report(sock, LIST_VAL, False, error_message=error_message)
+        _send_error_response(sock, request, error_message)
+
+    print_command_report(sock, LIST_VAL, True)
+    _send_ok_response(sock, request, details="\n".join(filenames))
+
 
 
 def _send_ok_response(

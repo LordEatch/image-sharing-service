@@ -28,8 +28,7 @@ def handle_command(sock: socket, command: str, get_file_str_fn: Callable[[], str
     elif equals_ignore_case(command, GET_VAL):
         handle_get_command(sock, get_file_str_fn)
     elif equals_ignore_case(command, LIST_VAL):
-        # handle_list_command(sock)
-        pass
+        handle_list_command(sock)
     else:
         print_error(f"Unknown command received: {command}.")
 
@@ -80,6 +79,26 @@ def handle_get_command(sock: socket, get_file_str_fn: Callable[[], str]) -> None
         return
 
     print_command_report(sock, GET_VAL, True, filename)
+
+
+def handle_list_command(sock: socket) -> None:
+    """
+    Get a list of all files and directories stored on the server.
+    Print them 1 line at a time.
+    Print an error message if no files are stored.
+    """
+    response = _send_request(sock, command=LIST_VAL)
+
+    if response[STATUS_KEY] == ERROR_VAL:
+        print_command_report(sock, GET_VAL, False, error_message=response[DETAILS_KEY])
+        return
+
+    filenames = response[DETAILS_KEY]
+
+    print("Files or directories on the server:")
+    print(filenames)  # The filenames are send by the server as a single string with line breaks between files.
+
+    print_command_report(sock, LIST_VAL, True)
 
 
 def _send_request(sock: socket, **kwargs) -> dict[str, Any]:  # type: ignore
