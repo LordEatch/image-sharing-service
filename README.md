@@ -12,11 +12,11 @@ The design focuses on:
 ---
 
 ## Features
-- **PUT** — upload image files to the server (rejects duplicates or empty files)  
-- **GET** — download existing image files from the server  
-- **LIST** — retrieve a list of all stored files on the server  
-- **Structured messages** with error reporting and clear status codes  
-- Modular and maintainable architecture  
+- **PUT** — upload image files to the server (rejects duplicates or empty files).  
+- **GET** — download existing image files from the server.  
+- **LIST** — retrieve a list of all stored files on the server.  
+- **Structured messages** with error reporting and clear status codes.  
+- Modular and maintainable architecture.  
 
 ---
 
@@ -28,11 +28,11 @@ All communication between client and server uses **pickled Python dictionaries**
 Each message (“payload”) includes:
 | Key | Description |
 |-----|--------------|
-| `COMMAND` | Operation type (`PUT`, `GET`, `LIST`) |
-| `STATUS` | Current stage or result (`REQUEST`, `OK`, `ERROR`) |
-| `DETAILS` | Optional text describing results or errors |
-| `FILENAME` | Name of the file being transferred (if applicable) |
-| `FILE_DATA` | Raw binary data of the file (only for transfers) |
+| `COMMAND` | Operation type (`PUT`, `GET`, `LIST`). |
+| `STATUS` | Current stage or result (`REQUEST`, `OK`, `ERROR`). |
+| `DETAILS` | Optional text describing results or errors. |
+| `FILENAME` | Name of the file being transferred (if applicable). |
+| `FILE_DATA` | Raw binary data of the file (only for transfers). |
 
 All messages are serialized using `pickle` and prefixed with a 4-byte integer indicating the payload size in bytes.
 
@@ -93,17 +93,17 @@ New commands can easily be added by extending the `COMMAND` field and implementi
 ## Package structure
 
 file_service/
-├── init.py
-├── client.py
-├── server.py
-├── protocol/
-│ ├── init.py
-│ ├── socket.py # Low-level TCP read/write
-│ └── message.py # Framing and payload parsing
-└── utilities/
-├── init.py
-├── socket_utils.py # Sending data over sockets
-└── message_utils.py # Sending/receiving structured payloads
+├── init.py  
+├── client.py  
+├── server.py  
+├── protocol/  
+│ ├── init.py  
+│ ├── socket.py # Low-level TCP read/write  
+│ └── message.py # Framing and payload parsing  
+└── utilities/  
+├── init.py  
+├── socket_utils.py # Sending data over sockets  
+└── message_utils.py # Sending/receiving structured payloads  
 
 This separation follows the **DRY principle**, reducing repetition and keeping networking logic distinct from application logic.
 
@@ -133,6 +133,6 @@ FILE_DATA: None
 
 ## Requirements
 
-- Python 3.10+
-- Standard library only (no external dependencies)
-- Compatible with Windows, macOS, and Linux
+- Python 3.10+.
+- Standard library only (no external dependencies).
+- Compatible with Windows, macOS, and Linux.
