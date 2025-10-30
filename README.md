@@ -4,10 +4,10 @@
 This package implements a simple **client–server file transfer system** over TCP sockets in Python. It enables clients to **upload (PUT)**, **download (GET)**, and **list (LIST)** image files stored on the server. Only files in **JPEG, JPG, or PNG** formats are supported.
 
 The design focuses on:
-- Reliable, structured communication using a custom **application-level protocol**
-- **Binary-safe** file transfer
-- Clear separation between **transport (socket)** and **application (message)** layers
-- **Extensibility** for new commands or features
+- Reliable, structured communication using a custom **application-level protocol**.
+- **Binary-safe** file transfer.
+- Clear separation between **transport (socket)** and **application (message)** layers.
+- **Extensibility** for new commands or features.
 
 ---
 
@@ -111,25 +111,25 @@ This separation follows the **DRY principle**, reducing repetition and keeping n
 
 ## Example interaction
 
-Client:
-COMMAND: PUT
-STATUS: REQUEST
-FILENAME: "cat.jpg"
-FILE_DATA: <binary>
+Client:  
+COMMAND: PUT  
+STATUS: REQUEST  
+FILENAME: "cat.jpg"  
+FILE_DATA: <binary>  
 
-Server:
-COMMAND: PUT
-STATUS: OK
-DETAILS: None
-FILENAME: "cat.jpg"
-FILE_DATA: None
+Server:  
+COMMAND: PUT  
+STATUS: OK  
+DETAILS: None  
+FILENAME: "cat.jpg"  
+FILE_DATA: None  
 
-...or on error:
-COMMAND: PUT
-STATUS: ERROR
-DETAILS: "File 'cat.jpg' already exists on server"
-FILENAME: "cat.jpg"
-FILE_DATA: None
+...or on error:  
+COMMAND: PUT  
+STATUS: ERROR  
+DETAILS: "File 'cat.jpg' already exists on server"  
+FILENAME: "cat.jpg"  
+FILE_DATA: None  
 
 ## Requirements
 
