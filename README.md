@@ -92,7 +92,7 @@ New commands can easily be added by extending the `COMMAND` field and implementi
 
 ## Package structure
 
-file_service/
+file_service/  
 ├── init.py  
 ├── client.py  
 ├── server.py  
