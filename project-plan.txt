@@ -1,0 +1,93 @@
+====================================================================
+PROJECT: Image File Service (Client–Server Application)
+====================================================================
+
+====================================================================
+1. Description
+====================================================================
+A Python-based file service limited to JPEG, JPG, and PNG images. Consists of two scripts:
+	1. server.py – Receives and serves client requests.
+	2. client.py – Sends upload, download, and list requests.
+Communication uses TCP sockets only. All non-image files must be rejected.
+
+====================================================================
+2. Functional requirements
+====================================================================
+1. Server
+	1. Execution.
+		1. Run as: python server.py <port>.
+			1. Check for valid port number (1-65535) that is not in use. DONE
+		2. Bind to all interfaces (“0.0.0.0” or empty string) and user-defined port. DONE
+	2. File Management.
+		1. Use current working directory for file storage. DONE
+		3. Allow file uploads and downloads and listing of filenames.
+			1. Upload: create new file in exclusive binary mode (do not overwrite preexisting files). DONE
+			2. Download: read file in binary mode and send it via socket. DONE
+			3. List: return names of top-level directory entries only.
+	3. Networking.
+		1. Use TCP sockets only (no socketserver/http/etc.). DONE
+		2. Correctly serialise and deserialise messages. DONE
+		3. Accept one client at a time using socket.accept(). NOTE brief is vague and could mean only allow 1 client at a time or not. DONE
+		4. For each client:
+			1. Read and parse request. DONE
+			2. Process request:
+				1. PUT: client request must specify request type, target filename, and file data. Server should create file in exclusive binary mode, copy received data into it, and prevent overwriting existing files. DONE
+				2. GET: client request must include request type and filename. Server should open file in binary mode and send its data to client through socket. DONE
+				3. LIST: client request must specify request type. Server should list all files and directories in its current working directory (using something like os.listdir()), excluding subdirectories, and send list to client over socket. DONE
+			3. Send response. DONE
+			4. Close connection. DONE
+		5. Handle mid-transfer connection loss gracefully. DONE
+	4. Output.
+        1. Server startup (IP and port) with text "server up and running". DONE
+        2. Each client connection. DONE
+        3. Single-line summary AFTER each request is processed: <client_IP:port> <request> <file(optional)> <success/fail> <error_type(optional)> DONE
+        4. ALL errors and exceptions throughout call stack (one line each). DONE
+	5. Protocol.
+		1. Implement custom application-level protocol defining:
+			1. Message structure (type, filename, data, status). DONE
+			2. Field encoding and exchange order. DONE
+	6. Shared Functions.
+		1. Reusable helper functions encouraged: send_file(), recv_file(), send_listing(), recv_listing(). DONE
+2. Client
+	1. Execution.
+		1. Run as: python client.py <hostname> <port> <put|get|list> [<filename>]. DONE
+		2. Accept only .jpg, .jpeg, .png (case-insensitive) files. DONE
+	2. Networking.
+		1. Create TCP socket, connect, send request, receive response, close. DONE
+		2. Correctly serialise and deserialise messages. DONE
+		3. Handle connection errors and partial transfers. DONE
+	3. Requests.
+		1. PUT: client must open specified local file in binary mode, read its data, send it to server via socket and then close connection. DONE
+		2. GET: client must create specified local file in exclusive binary mode, receive and store data from the server, deny overwriting existing files and then close connection. DONE
+		3. LIST: client must send request, receive directory listing from server, print each entry on separate lines and then close connection. DONE
+	4. Output.
+		1. After each request, print one-line report: <server_IP:port> <request> <file(optional)> <status> <details(optional)>. DONE
+
+====================================================================
+3. Non-functional requirements
+====================================================================
+1. Reliability – Handle unexpected errors without crashing.
+	1. Reminder of what I am REQUIRED to validate according to functional requirements:
+		1. "Check for valid port number (1-65535) that is not in use." DONE
+		2. "Accept only .jpg, .jpeg, .png (case-insensitive) files." DONE
+		3. Deny file overriding for both server and client locally (after receiving request/response). DONE
+		4. Type of request. Reject anything other than get, put or list. DONE
+		5. Handle binary data properly in case of premature disconnections. DONE
+4. Maintainability – Modular, well-commented, reusable code.
+5. Performance – Efficient sequential request handling.
+6. Code Quality – Clear naming, indentation, and minimal duplication.
+7. Binary Data – Correct handling of byte ordering and binary transfers.
+
+====================================================================
+4. Submission requirements
+====================================================================
+1. Deliverables:
+	1. Source.zip – Contains server.py, client.py, and shared modules.
+	2. Report.pdf (≤2 pages) – Describes protocol format, message flow, and rationale for design decisions.
+2. No third-party networking libraries permitted.
+
+====================================================================
+5. Message protocol plan
+====================================================================
+		2 bytes			n bytes
+<message_length_in_bytes><json>

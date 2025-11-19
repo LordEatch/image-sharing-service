@@ -1,0 +1,10 @@
+- finish server/request_handling.py with proper error handling and error codes back to server. maybe add parameter to message protocol?
+- finish storage.py
+- make sure there are no crashes for errors (big job)
+- make sure there are no semantic errors where i have used 'is' instead of '=='
+
+unimportant:
+- check that variable names are consistently short (outside of utilities)
+- use george to check if i could improve type checking outside of utilities
+- sort the names of all constants (including private ones in functions)
+- check that all imports are relative
